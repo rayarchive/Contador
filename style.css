@@ -1,12 +1,12 @@
 :root {
     /* --- CORES MODO CLARO (Padrão) --- */
     --container-bg: #ffffff;
-    --border-color: #e6c68b; 
+    --border-color: #000000; 
     --text-primary: #7d5a5a; 
     --text-secondary: #a88888;
     --accent-pink: #ffb7c5; 
     --font-chic: 'Playfair Display', serif;
-    --font-cute: 'Quicksand', sans-serif;
+    --font-cute: 'Playfair Display', serif;
 }
 
 /* --- DETECÇÃO MODO ESCURO (Dark Mode) --- */
@@ -14,7 +14,7 @@
     :root {
         /* Fundo escuro translúcido para não ofuscar */
         --container-bg: rgba(40, 40, 40, 0.95); 
-        --border-color: #ffffff; /* Dourado mais brilhante */
+        --border-color: #ffffff; 
         --text-primary: #ffebd6; /* Creme claro para leitura */
         --text-secondary: #cba8a8;
         --accent-pink: #ffb7c5; /* Mantém o rosa dos corações */
