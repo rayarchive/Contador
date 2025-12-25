@@ -36,7 +36,7 @@ function saveStats() {
     localStorage.setItem(KEYS.ANDAMENTO, OBRAS_ANDAMENTO);
 }
 
-// --- EXPLOSÃO APENAS DE CORAÇÕES ---
+// --- EXPLOSÃO DE CORAÇÕES PERFEITOS ---
 function spawnSparkles() {
     const holder = document.getElementById('particles-holder');
     const bar = document.getElementById('progress-bar-fill');
@@ -44,7 +44,8 @@ function spawnSparkles() {
 
     for (let i = 0; i < 22; i++) {
         const p = document.createElement('div');
-        p.className = 'particle shape-heart'; // Definido fixo como coração
+        // Agora a classe .particle já é o coração definido no CSS
+        p.className = 'particle'; 
 
         p.style.left = `${xPos}px`;
         p.style.top = '50%';
