@@ -1,12 +1,12 @@
 :root {
     /* --- CORES MODO CLARO (Padrão) --- */
     --container-bg: #ffffff;
-    --border-color: #000000; 
+    --border-color: #e6c68b; 
     --text-primary: #7d5a5a; 
     --text-secondary: #a88888;
     --accent-pink: #ffb7c5; 
     --font-chic: 'Playfair Display', serif;
-    --font-cute: 'Playfair Display', serif;
+    --font-cute: 'Quicksand', sans-serif;
 }
 
 /* --- DETECÇÃO MODO ESCURO (Dark Mode) --- */
@@ -24,11 +24,11 @@
 body {
     background-color: transparent;
     margin: 0;
-    padding: 15px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     font-family: var(--font-cute);
-    font-size: 13px; 
+    font-size: 15px; 
 }
 
 .chic-container {
