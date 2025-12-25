@@ -14,7 +14,7 @@
     :root {
         /* Fundo escuro translúcido para não ofuscar */
         --container-bg: rgba(40, 40, 40, 0.95); 
-        --border-color: #d4af37; /* Dourado mais brilhante */
+        --border-color: #ffffff; /* Dourado mais brilhante */
         --text-primary: #ffebd6; /* Creme claro para leitura */
         --text-secondary: #cba8a8;
         --accent-pink: #ffb7c5; /* Mantém o rosa dos corações */
