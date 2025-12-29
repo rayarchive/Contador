@@ -13,7 +13,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Fundo escuro translúcido para não ofuscar */
-        --container-bg: rgba(40, 40, 40, 0.95); 
+        --container-bg: rgba(20, 20, 20, 0.95); 
         --border-color: #ffffff; 
         --text-primary: #ffebd6; /* Creme claro para leitura */
         --text-secondary: #cba8a8;
