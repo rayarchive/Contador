@@ -5,7 +5,7 @@
     --text-primary: #7d5a5a; 
     --text-secondary: #a88888;
     --accent-pink: #ffb7c5; 
-    --font-chic: 'Playfair Display', serif;
+    --font-chic: 'Quicksand', sans-serif;
     --font-cute: 'Quicksand', sans-serif;
 }
 
@@ -13,7 +13,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --container-bg: rgba(10, 10, 10, 0.95); 
-        --border-color: #d4af37; 
+        --border-color: #ffffff; 
         --text-primary: #ffebd6; 
         --text-secondary: #cba8a8;
         --accent-pink: #ffb7c5; 
