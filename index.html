@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -16,24 +17,29 @@
         <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="currentColor"/>
     </svg>
 
-    <button class="reset-button" onclick="resetStats()" title="Resetar Jornada">&#x21BB;</button>
-
     <div class="stats-container">
         <div class="stat-group">
             <span class="stat-label">Lidas</span>
             <span class="stat-value" id="obras-lidas">0</span>
-            <button class="icon-button" onclick="updateStats('LIDAS')">✔︎</button>
+            <div class="action-buttons">
+                <button class="icon-button minus" onclick="updateStats('LIDAS', -1)" title="Diminuir">➖</button>
+                <button class="icon-button plus" onclick="updateStats('LIDAS', 1)" title="Adicionar">✅</button>
+            </div>
         </div>
+
         <div class="stat-group">
             <span class="stat-label">Cadastradas</span>
             <span class="stat-value" id="obras-cadastradas">0</span>
-            <button class="icon-button" onclick="updateStats('CADASTRADAS')">✚</button>
+            <div class="action-buttons">
+                <button class="icon-button minus" onclick="updateStats('CADASTRADAS', -1)" title="Diminuir">➖</button>
+                <button class="icon-button plus" onclick="updateStats('CADASTRADAS', 1)" title="Adicionar">➕</button>
+            </div>
         </div>
+
         <div class="stat-group">
             <span class="stat-label">Andamento</span>
             <span class="stat-value" id="obras-andamento">0</span>
-            <div style="height: 25px;"></div>
-        </div>
+            <div style="height: 25px;"></div> </div>
     </div>
 
     <div class="progress-wrapper">
