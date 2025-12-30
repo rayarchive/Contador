@@ -5,8 +5,8 @@
     --text-primary: #7d5a5a; 
     --text-secondary: #a88888;
     --accent-pink: #ffb7c5; 
-    --font-chic: 'Quicksand', sans-serif;
-    --font-cute: 'Quicksand', sans-serif;
+    --font-chic: 'Playfair Display', serif;
+    --font-cute: 'Playfair Display', serif;
 }
 
 /* --- DETECÇÃO MODO ESCURO (Dark Mode) --- */
