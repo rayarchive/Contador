@@ -1,23 +1,22 @@
 :root {
     /* --- CORES MODO CLARO (Padrão) --- */
     --container-bg: #ffffff;
-    --border-color: #000000; 
+    --border-color: #e6c68b; 
     --text-primary: #7d5a5a; 
     --text-secondary: #a88888;
     --accent-pink: #ffb7c5; 
     --font-chic: 'Playfair Display', serif;
-    --font-cute: 'Playfair Display', serif;
+    --font-cute: 'Quicksand', sans-serif;
 }
 
 /* --- DETECÇÃO MODO ESCURO (Dark Mode) --- */
 @media (prefers-color-scheme: dark) {
     :root {
-        /* Fundo escuro translúcido para não ofuscar */
-        --container-bg: rgba(20, 20, 20, 0.95); 
-        --border-color: #ffffff; 
-        --text-primary: #ffebd6; /* Creme claro para leitura */
+        --container-bg: rgba(10, 10, 10, 0.95); 
+        --border-color: #d4af37; 
+        --text-primary: #ffebd6; 
         --text-secondary: #cba8a8;
-        --accent-pink: #ffb7c5; /* Mantém o rosa dos corações */
+        --accent-pink: #ffb7c5; 
     }
 }
 
@@ -44,7 +43,7 @@ body {
     justify-content: space-between;
     position: relative;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s; /* Transição suave entre modos */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .corner-star { position: absolute; color: var(--border-color); opacity: 0.8; }
@@ -57,16 +56,36 @@ body {
 .stat-value { font-family: var(--font-chic); font-size: 2em; font-weight: 700; color: var(--text-primary); line-height: 1; }
 .stat-label { font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; }
 
-.icon-button { background: none; border: none; cursor: pointer; font-size: 1em; opacity: 0.2; margin-top: 5px; filter: grayscale(100%) brightness(150%); }
-/* No modo escuro, inverte a cor do ícone para aparecer */
+/* Container dos botões de ação */
+.action-buttons {
+    display: flex;
+    gap: 12px; /* Espaço entre o menos e o mais */
+    margin-top: 5px;
+}
+
+.icon-button { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1em; /* Tamanho do ícone */
+    opacity: 0.05; /* Bem transparente como pedido */
+    transition: opacity 0.3s;
+    padding: 0;
+    filter: grayscale(100%) brightness(120%);
+}
+
+.icon-button:hover { opacity: 0.6; } /* Fica um pouco mais visível ao passar o mouse */
+
+/* No modo escuro, inverte a cor para aparecer no fundo cinza */
 @media (prefers-color-scheme: dark) {
-    .icon-button { filter: invert(1); opacity: 0.4; }
+    .icon-button { filter: invert(1); opacity: 0.2; }
+    .icon-button:hover { opacity: 0.7; }
 }
 
 /* Barra de Progresso */
 .progress-wrapper { flex-grow: 1; margin: 0 50px; position: relative; height: 26px; }
 .progress-container {
-    background-color: rgba(255,255,255, 0.1); /* Fundo da barra semitransparente */
+    background-color: rgba(255,255,255, 0.1); 
     border: 1px solid var(--border-color);
     height: 100%; border-radius: 13px; overflow: hidden; position: relative;
 }
@@ -79,7 +98,7 @@ body {
 .progress-text {
     position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%);
     font-family: var(--font-chic); font-size: 0.9em; color: var(--text-primary); font-weight: 700; z-index: 5;
-    text-shadow: 0 0 2px rgba(0,0,0,0.1); /* Sombra leve para ler em cima da barra */
+    text-shadow: 0 0 2px rgba(0,0,0,0.1); 
 }
 
 /* --- PARTÍCULAS (Corações) --- */
@@ -107,36 +126,27 @@ body {
 .quote-text { font-family: var(--font-chic); font-size: 1.05em; font-style: italic; color: var(--text-primary); }
 .quote-author { display: block; font-size: 0.75em; color: var(--border-color); margin-top: 8px; text-transform: uppercase; }
 
-.reset-button { position: absolute; left: 15px; bottom: 10px; background: none; border: none; opacity: 0.2; cursor: pointer; }
-@media (prefers-color-scheme: dark) { .reset-button { filter: invert(1); } }
-
-/* --- VERSÃO MOBILE (AJUSTE PARA CELULAR) --- */
+/* --- VERSÃO MOBILE --- */
 @media (max-width: 900px) {
     .chic-container {
-        flex-direction: column; /* Empilha um embaixo do outro */
+        flex-direction: column; 
         padding: 30px 20px;
         height: auto;
-        gap: 30px; /* Espaço entre as seções */
+        gap: 30px;
     }
-
     .stats-container {
         width: 100%;
-        justify-content: space-around; /* Espalha os números */
+        justify-content: space-around; 
         gap: 10px;
     }
-
     .progress-wrapper {
         width: 100%;
-        margin: 0; /* Remove margem lateral */
-        height: 30px; /* Barra um pouco mais alta no celular para toque */
+        margin: 0; 
+        height: 30px; 
     }
-
     .quote-section {
         width: 100%;
         padding: 0;
         border: none;
     }
-    
-    /* Reposiciona o reset para não atrapalhar */
-    .reset-button { bottom: 5px; left: 50%; transform: translateX(-50%); }
 }
