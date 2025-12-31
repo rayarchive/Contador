@@ -23,7 +23,7 @@
 body {
     background-color: transparent;
     margin: 0;
-    padding: 0px;
+    padding: 2px;
     display: flex;
     justify-content: center;
     font-family: var(--font-cute);
