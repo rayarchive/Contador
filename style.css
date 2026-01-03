@@ -59,7 +59,7 @@ body {
 /* Container dos botões de ação */
 .action-buttons {
     display: flex;
-    gap: 12px; /* Espaço entre o menos e o mais */
+    gap: 12px; 
     margin-top: 5px;
 }
 
@@ -67,16 +67,15 @@ body {
     background: none; 
     border: none; 
     cursor: pointer; 
-    font-size: 1em; /* Tamanho do ícone */
-    opacity: 0.03; /* Bem transparente como pedido */
+    font-size: 1em; 
+    opacity: 0.03; /* Transparência original mantida */
     transition: opacity 0.2s;
     padding: 0;
     filter: grayscale(100%) brightness(120%);
 }
 
-.icon-button:hover { opacity: 0.4; } /* Fica um pouco mais visível ao passar o mouse */
+.icon-button:hover { opacity: 0.4; } 
 
-/* No modo escuro, inverte a cor para aparecer no fundo cinza */
 @media (prefers-color-scheme: dark) {
     .icon-button { filter: invert(1); opacity: 0.2; }
     .icon-button:hover { opacity: 0.4; }
@@ -125,6 +124,76 @@ body {
 .quote-section { width: 320px; text-align: center; }
 .quote-text { font-family: var(--font-chic); font-size: 1.05em; font-style: italic; color: var(--text-primary); }
 .quote-author { display: block; font-size: 0.75em; color: var(--border-color); margin-top: 8px; text-transform: uppercase; }
+
+/* --- NOVO: ESTILOS DO PAINEL DE BACKUP --- */
+
+/* Botão de Engrenagem */
+.config-toggle {
+    position: absolute;
+    top: 5px;
+    right: 35px; /* Perto da estrela */
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.1; /* Discreto */
+    font-size: 14px;
+    z-index: 100;
+    filter: grayscale(100%);
+    transition: opacity 0.3s;
+}
+.config-toggle:hover { opacity: 0.6; }
+
+/* Painel Centralizado */
+#backup-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--container-bg);
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    border-radius: 15px;
+    z-index: 1000;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.backup-hidden { display: none; }
+
+#backup-panel h3 { margin-top: 0; margin-bottom: 5px; font-family: var(--font-chic); color: var(--text-primary); font-size: 1.1em; }
+#backup-panel p { font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; }
+
+#backup-data {
+    width: 90%;
+    height: 50px;
+    margin: 5px auto;
+    display: block;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 10px;
+    padding: 5px;
+    background: transparent;
+    color: var(--text-primary);
+    resize: none;
+}
+
+.backup-btns { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+
+.backup-btns button, .close-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-chic);
+    font-size: 11px;
+}
+
+.backup-btns button:hover { background: var(--border-color); color: white; }
+.close-btn { margin-top: 15px; border: none; text-decoration: underline; opacity: 0.6; }
+
 
 /* --- VERSÃO MOBILE --- */
 @media (max-width: 900px) {
