@@ -130,8 +130,8 @@ body {
 /* Botão de Engrenagem */
 .config-toggle {
     position: absolute;
-    top: 5px;
-    right: 35px; /* Perto da estrela */
+    bottom: 15px;
+    left: 20px; /* Perto da estrela */
     background: none;
     border: none;
     cursor: pointer;
@@ -139,7 +139,7 @@ body {
     font-size: 14px;
     z-index: 100;
     filter: grayscale(100%);
-    transition: opacity 0.3s;
+    transition: opacity 0.2s;
 }
 .config-toggle:hover { opacity: 0.6; }
 
