@@ -125,62 +125,85 @@ body {
 .quote-text { font-family: var(--font-chic); font-size: 1.05em; font-style: italic; color: var(--text-primary); }
 .quote-author { display: block; font-size: 0.75em; color: var(--border-color); margin-top: 8px; text-transform: uppercase; }
 
-/* --- NOVO: ESTILOS DO PAINEL DE BACKUP --- */
+/* --- ESTILOS DO PAINEL DE BACKUP (Versão Horizontal Integrada) --- */
 
-/* Botão de Engrenagem */
+/* Botão de Engrenagem (Posicionado no canto inferior esquerdo) */
 .config-toggle {
     position: absolute;
-    bottom: 15px;
-    left: 20px; /* Perto da estrela */
+    bottom: 5px;
+    left: 2px;
     background: none;
     border: none;
     cursor: pointer;
-    opacity: 0.1; /* Discreto */
-    font-size: 14px;
+    opacity: 0.1;
+    font-size: 10px;
     z-index: 100;
     filter: grayscale(100%);
-    transition: opacity 0.2s;
+    transition: opacity 0.1s;
 }
 .config-toggle:hover { opacity: 0.6; }
 
-/* Painel Centralizado */
+/* O Painel agora é uma barra que cobre o widget */
 #backup-panel {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: var(--container-bg);
-    border: 2px solid var(--border-color);
-    padding: 20px;
-    border-radius: 15px;
+    /* Borda opcional: descomente se quiser uma borda interna */
+    /* border: 2px solid var(--border-color); */
+    border-radius: 18px; /* Mesmo arredondamento do container principal */
     z-index: 1000;
-    width: 280px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    
+    /* Layout Horizontal */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px; /* Espaço nas laterais */
+    box-sizing: border-box;
 }
 
-.backup-hidden { display: none; }
+.backup-hidden { display: none !important; }
 
-#backup-panel h3 { margin-top: 0; margin-bottom: 5px; font-family: var(--font-chic); color: var(--text-primary); font-size: 1.1em; }
-#backup-panel p { font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; }
+/* Ajusta o título para ser pequeno e na mesma linha, ou esconde se preferir */
+#backup-panel h3 { 
+    margin: 0; 
+    font-family: var(--font-chic); 
+    color: var(--text-primary); 
+    font-size: 1em; 
+    white-space: nowrap;
+    margin-right: 15px;
+}
 
+/* Esconde a descrição "Copie o código..." para economizar espaço no desktop */
+#backup-panel p { display: none; }
+
+/* O campo de texto vira uma linha fina */
 #backup-data {
-    width: 90%;
-    height: 50px;
-    margin: 5px auto;
-    display: block;
+    flex-grow: 1; /* Ocupa todo o espaço disponível no meio */
+    height: 30px;
+    margin: 0 15px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    font-size: 10px;
-    padding: 5px;
+    font-size: 11px;
+    padding: 5px 10px;
     background: transparent;
     color: var(--text-primary);
-    resize: none;
+    resize: none; /* Impede arrastar */
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.backup-btns { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+.backup-btns { 
+    display: flex; 
+    gap: 10px; 
+    align-items: center;
+    margin: 0;
+}
 
-.backup-btns button, .close-btn {
+.backup-btns button {
     padding: 6px 12px;
     border: 1px solid var(--border-color);
     background: transparent;
@@ -189,11 +212,46 @@ body {
     cursor: pointer;
     font-family: var(--font-chic);
     font-size: 11px;
+    white-space: nowrap;
 }
-
 .backup-btns button:hover { background: var(--border-color); color: white; }
-.close-btn { margin-top: 15px; border: none; text-decoration: underline; opacity: 0.6; }
 
+/* Botão Fechar vira um "X" ou texto simples na direita */
+.close-btn { 
+    margin-left: 15px; 
+    margin-top: 0; /* Remove margem antiga */
+    border: none; 
+    background: none;
+    text-decoration: none; 
+    font-size: 14px; 
+    cursor: pointer; 
+    color: var(--text-secondary); 
+    font-weight: bold;
+}
+.close-btn:hover { color: var(--text-primary); }
+
+
+/* --- VERSÃO MOBILE (Mantém o painel como quadrado/bloco) --- */
+@media (max-width: 900px) {
+    #backup-panel {
+        /* Reverte para o estilo "Popup" no celular */
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        padding: 20px;
+        border: 2px solid var(--border-color);
+    }
+    
+    #backup-panel h3 { margin-bottom: 10px; margin-right: 0; }
+    #backup-panel p { display: block; margin-bottom: 10px; }
+    #backup-data { width: 100%; height: 60px; margin: 10px 0; }
+    .backup-btns { width: 100%; justify-content: center; }
+    .close-btn { margin-top: 15px; margin-left: 0; text-decoration: underline; font-weight: normal; }
+}
 
 /* --- VERSÃO MOBILE --- */
 @media (max-width: 900px) {
