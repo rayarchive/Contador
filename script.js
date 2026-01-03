@@ -73,33 +73,67 @@ function updateDisplay(sparkle = false) {
     if (sparkle && taxa > 0) setTimeout(spawnSparkles, 150);
 }
 
-/* FUNÇÃO CORRIGIDA: Lógica Automática 
-   Agora o Andamento é sempre = Cadastradas - Lidas.
-   Isso impede que o número "bugue" independente da ordem dos cliques.
-*/
 function updateStats(tipo, change) {
     let sparkle = false;
 
     if (tipo === 'LIDAS') {
         OBRAS_LIDAS += change;
-        if (OBRAS_LIDAS < 0) OBRAS_LIDAS = 0; // Não deixa ficar negativo
+        if (OBRAS_LIDAS < 0) OBRAS_LIDAS = 0; 
         if (change > 0) sparkle = true;
     } else {
         // TIPO CADASTRADAS
         OBRAS_CADASTRADAS += change;
-        if (OBRAS_CADASTRADAS < 0) OBRAS_CADASTRADAS = 0; // Não deixa ficar negativo
+        if (OBRAS_CADASTRADAS < 0) OBRAS_CADASTRADAS = 0; 
     }
     
-    // CORREÇÃO MÁGICA:
-    // Calcula o andamento automaticamente baseada nos totais atuais
+    // Cálculo Automático do Andamento
     OBRAS_ANDAMENTO = OBRAS_CADASTRADAS - OBRAS_LIDAS;
-
-    // Se por acaso você marcou mais lidos que cadastrados (erro humano),
-    // o andamento fica em 0 em vez de ficar negativo.
     if (OBRAS_ANDAMENTO < 0) OBRAS_ANDAMENTO = 0;
     
     saveStats();
     updateDisplay(sparkle);
+}
+
+// --- FUNÇÕES DO PAINEL DE BACKUP ---
+function toggleBackupPanel() {
+    const panel = document.getElementById('backup-panel');
+    panel.classList.toggle('backup-hidden');
+}
+
+function generateBackup() {
+    // Cria um objeto simples com os dados
+    const data = {
+        lidas: OBRAS_LIDAS,
+        cadastradas: OBRAS_CADASTRADAS
+    };
+    // Transforma em texto codificado
+    const encrypted = btoa(JSON.stringify(data));
+    document.getElementById('backup-data').value = encrypted;
+    alert("Código gerado! Copie e guarde.");
+}
+
+function restoreBackup() {
+    const code = document.getElementById('backup-data').value;
+    if (!code) return alert("Por favor, cole um código primeiro.");
+
+    try {
+        // Descodifica o texto de volta para dados
+        const decrypted = JSON.parse(atob(code));
+        
+        if (confirm(`Restaurar estes dados?\nLidas: ${decrypted.lidas}\nCadastradas: ${decrypted.cadastradas}`)) {
+            OBRAS_LIDAS = decrypted.lidas;
+            OBRAS_CADASTRADAS = decrypted.cadastradas;
+            // Recalcula o andamento para garantir consistência
+            OBRAS_ANDAMENTO = Math.max(0, OBRAS_CADASTRADAS - OBRAS_LIDAS);
+            
+            saveStats();
+            updateDisplay();
+            toggleBackupPanel();
+            alert("Dados restaurados com sucesso!");
+        }
+    } catch (e) {
+        alert("Código inválido! Verifique se copiou corretamente.");
+    }
 }
 
 loadStats();
