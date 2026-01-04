@@ -130,8 +130,8 @@ body {
 /* Botão de Engrenagem (Posicionado no canto inferior esquerdo) */
 .config-toggle {
     position: absolute;
-    bottom: 5px;
-    left: 2px;
+    bottom: 10px;
+    left: 12px;
     background: none;
     border: none;
     cursor: pointer;
