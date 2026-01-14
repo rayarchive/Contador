@@ -27,7 +27,6 @@ let OBRAS_LIDAS, OBRAS_CADASTRADAS, OBRAS_ANDAMENTO;
 function loadStats() {
     OBRAS_LIDAS = parseInt(localStorage.getItem(KEYS.LIDAS)) || 0;
     OBRAS_CADASTRADAS = parseInt(localStorage.getItem(KEYS.CADASTRADAS)) || 0;
-    // O Andamento agora é calculado na hora, para corrigir erros antigos salvos
     OBRAS_ANDAMENTO = Math.max(0, OBRAS_CADASTRADAS - OBRAS_LIDAS);
 }
 
@@ -81,12 +80,10 @@ function updateStats(tipo, change) {
         if (OBRAS_LIDAS < 0) OBRAS_LIDAS = 0; 
         if (change > 0) sparkle = true;
     } else {
-        // TIPO CADASTRADAS
         OBRAS_CADASTRADAS += change;
         if (OBRAS_CADASTRADAS < 0) OBRAS_CADASTRADAS = 0; 
     }
     
-    // Cálculo Automático do Andamento
     OBRAS_ANDAMENTO = OBRAS_CADASTRADAS - OBRAS_LIDAS;
     if (OBRAS_ANDAMENTO < 0) OBRAS_ANDAMENTO = 0;
     
@@ -94,45 +91,56 @@ function updateStats(tipo, change) {
     updateDisplay(sparkle);
 }
 
-// --- FUNÇÕES DO PAINEL DE BACKUP ---
+// --- FUNÇÕES DO PAINEL DE BACKUP (JSON PURO) ---
 function toggleBackupPanel() {
     const panel = document.getElementById('backup-panel');
     panel.classList.toggle('backup-hidden');
+    // Limpa o textarea ao abrir/fechar
+    document.getElementById('backup-data').value = "";
 }
 
 function generateBackup() {
-    // Cria um objeto simples com os dados
     const data = {
         lidas: OBRAS_LIDAS,
-        cadastradas: OBRAS_CADASTRADAS
+        cadastradas: OBRAS_CADASTRADAS,
+        timestamp: new Date().toLocaleString()
     };
-    // Transforma em texto codificado
-    const encrypted = btoa(JSON.stringify(data));
-    document.getElementById('backup-data').value = encrypted;
-    alert("Código gerado! Copie e guarde.");
+    
+    // Converte para JSON legível
+    const jsonString = JSON.stringify(data, null, 2);
+    document.getElementById('backup-data').value = jsonString;
+    
+    // Seleciona o texto automaticamente para facilitar a cópia
+    const textarea = document.getElementById('backup-data');
+    textarea.select();
+    
+    alert("Código JSON gerado com sucesso!");
 }
 
 function restoreBackup() {
-    const code = document.getElementById('backup-data').value;
-    if (!code) return alert("Por favor, cole um código primeiro.");
+    const jsonString = document.getElementById('backup-data').value;
+    if (!jsonString) return alert("Por favor, cole o código JSON para restaurar.");
 
     try {
-        // Descodifica o texto de volta para dados
-        const decrypted = JSON.parse(atob(code));
+        const data = JSON.parse(jsonString);
         
-        if (confirm(`Restaurar estes dados?\nLidas: ${decrypted.lidas}\nCadastradas: ${decrypted.cadastradas}`)) {
-            OBRAS_LIDAS = decrypted.lidas;
-            OBRAS_CADASTRADAS = decrypted.cadastradas;
-            // Recalcula o andamento para garantir consistência
+        // Verificação básica de integridade
+        if (data.lidas === undefined || data.cadastradas === undefined) {
+            throw new Error("Formato inválido");
+        }
+
+        if (confirm(`Restaurar estes dados?\nLidas: ${data.lidas}\nCadastradas: ${data.cadastradas}`)) {
+            OBRAS_LIDAS = parseInt(data.lidas);
+            OBRAS_CADASTRADAS = parseInt(data.cadastradas);
             OBRAS_ANDAMENTO = Math.max(0, OBRAS_CADASTRADAS - OBRAS_LIDAS);
             
             saveStats();
             updateDisplay();
             toggleBackupPanel();
-            alert("Dados restaurados com sucesso!");
+            alert("Backup restaurado com sucesso!");
         }
     } catch (e) {
-        alert("Código inválido! Verifique se copiou corretamente.");
+        alert("Erro: O texto colado não é um backup válido. Verifique se copiou o JSON completo.");
     }
 }
 
