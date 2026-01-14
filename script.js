@@ -36,7 +36,6 @@ function saveStats() {
     localStorage.setItem(KEYS.ANDAMENTO, OBRAS_ANDAMENTO);
 }
 
-// --- EXPLOSÃO DE CORAÇÕES ---
 function spawnSparkles() {
     const holder = document.getElementById('particles-holder');
     const bar = document.getElementById('progress-bar-fill');
@@ -45,9 +44,10 @@ function spawnSparkles() {
     for (let i = 0; i < 22; i++) {
         const p = document.createElement('div');
         p.className = 'particle'; 
-
+        p.style.position = 'absolute';
         p.style.left = `${xPos}px`;
         p.style.top = '50%';
+        p.style.animation = 'pop-out 1.2s forwards ease-out';
 
         const tx = (Math.random() - 0.2) * 160;
         const ty = (Math.random() - 0.5) * 130;
@@ -61,20 +61,16 @@ function spawnSparkles() {
 
 function updateDisplay(sparkle = false) {
     const taxa = OBRAS_CADASTRADAS > 0 ? Math.round((OBRAS_LIDAS / OBRAS_CADASTRADAS) * 100) : 0;
-    
     document.getElementById('obras-lidas').textContent = OBRAS_LIDAS;
     document.getElementById('obras-cadastradas').textContent = OBRAS_CADASTRADAS;
     document.getElementById('obras-andamento').textContent = OBRAS_ANDAMENTO;
-    
     document.getElementById('progress-bar-fill').style.width = taxa + '%';
     document.getElementById('progress-percent').textContent = taxa + '%';
-
     if (sparkle && taxa > 0) setTimeout(spawnSparkles, 150);
 }
 
 function updateStats(tipo, change) {
     let sparkle = false;
-
     if (tipo === 'LIDAS') {
         OBRAS_LIDAS += change;
         if (OBRAS_LIDAS < 0) OBRAS_LIDAS = 0; 
@@ -83,53 +79,36 @@ function updateStats(tipo, change) {
         OBRAS_CADASTRADAS += change;
         if (OBRAS_CADASTRADAS < 0) OBRAS_CADASTRADAS = 0; 
     }
-    
-    OBRAS_ANDAMENTO = OBRAS_CADASTRADAS - OBRAS_LIDAS;
-    if (OBRAS_ANDAMENTO < 0) OBRAS_ANDAMENTO = 0;
-    
+    OBRAS_ANDAMENTO = Math.max(0, OBRAS_CADASTRADAS - OBRAS_LIDAS);
     saveStats();
     updateDisplay(sparkle);
 }
 
-// --- FUNÇÕES DO PAINEL DE BACKUP (JSON PURO) ---
 function toggleBackupPanel() {
     const panel = document.getElementById('backup-panel');
     panel.classList.toggle('backup-hidden');
-    // Limpa o textarea ao abrir/fechar
     document.getElementById('backup-data').value = "";
 }
 
 function generateBackup() {
-    const data = {
-        lidas: OBRAS_LIDAS,
-        cadastradas: OBRAS_CADASTRADAS,
-        timestamp: new Date().toLocaleString()
-    };
-    
-    // Converte para JSON legível
-    const jsonString = JSON.stringify(data, null, 2);
-    document.getElementById('backup-data').value = jsonString;
-    
-    // Seleciona o texto automaticamente para facilitar a cópia
-    const textarea = document.getElementById('backup-data');
-    textarea.select();
-    
-    alert("Código JSON gerado com sucesso!");
+    const data = { lidas: OBRAS_LIDAS, cadastradas: OBRAS_CADASTRADAS };
+    const jsonString = JSON.stringify(data); // Removido espaços para evitar quebra no Notion
+    const area = document.getElementById('backup-data');
+    area.value = jsonString;
+    area.select();
+    alert("Código gerado! Copie o texto que apareceu no campo.");
 }
 
 function restoreBackup() {
-    const jsonString = document.getElementById('backup-data').value;
-    if (!jsonString) return alert("Por favor, cole o código JSON para restaurar.");
+    let rawData = document.getElementById('backup-data').value.trim();
+    if (!rawData) return alert("Cole o código primeiro.");
 
     try {
-        const data = JSON.parse(jsonString);
+        // Limpeza de aspas curvas (comum quando se copia do Notion/iOS)
+        const cleanData = rawData.replace(/[\u201C\u201D]/g, '"');
+        const data = JSON.parse(cleanData);
         
-        // Verificação básica de integridade
-        if (data.lidas === undefined || data.cadastradas === undefined) {
-            throw new Error("Formato inválido");
-        }
-
-        if (confirm(`Restaurar estes dados?\nLidas: ${data.lidas}\nCadastradas: ${data.cadastradas}`)) {
+        if (data.lidas !== undefined && data.cadastradas !== undefined) {
             OBRAS_LIDAS = parseInt(data.lidas);
             OBRAS_CADASTRADAS = parseInt(data.cadastradas);
             OBRAS_ANDAMENTO = Math.max(0, OBRAS_CADASTRADAS - OBRAS_LIDAS);
@@ -137,10 +116,13 @@ function restoreBackup() {
             saveStats();
             updateDisplay();
             toggleBackupPanel();
-            alert("Backup restaurado com sucesso!");
+            alert("Restaurado com sucesso!");
+        } else {
+            alert("O código não contém os dados necessários.");
         }
     } catch (e) {
-        alert("Erro: O texto colado não é um backup válido. Verifique se copiou o JSON completo.");
+        alert("Erro ao ler código. Certifique-se de copiar o texto completo, incluindo as chaves { }.");
+        console.error(e);
     }
 }
 
