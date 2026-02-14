@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Widget de Leitura - Corações</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chic-container">
+    <svg class="corner-star top-left" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="currentColor"/>
+    </svg>
+    <svg class="corner-star bottom-right" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="currentColor"/>
+    </svg>
+
+    <button class="config-toggle" onclick="toggleBackupPanel()">⚙️</button>
+
+    <div class="stats-container">
+        <div class="stat-group">
+            <span class="stat-label">Lidas</span>
+            <span class="stat-value" id="obras-lidas">0</span>
+            <div class="action-buttons">
+                <button class="icon-button minus" onclick="updateStats('LIDAS', -1)" title="Diminuir">‒</button>
+                <button class="icon-button plus" onclick="updateStats('LIDAS', 1)" title="Adicionar">✔</button>
+            </div>
+        </div>
+
+        <div class="stat-group">
+            <span class="stat-label">Cadastradas</span>
+            <span class="stat-value" id="obras-cadastradas">0</span>
+            <div class="action-buttons">
+                <button class="icon-button minus" onclick="updateStats('CADASTRADAS', -1)" title="Diminuir">‒</button>
+                <button class="icon-button plus" onclick="updateStats('CADASTRADAS', 1)" title="Adicionar">✚</button>
+            </div>
+        </div>
+
+        <div class="stat-group">
+            <span class="stat-label">Andamento</span>
+            <span class="stat-value" id="obras-andamento">0</span>
+            <div style="height: 25px;"></div> 
+        </div>
+    </div>
+
+    <div class="progress-wrapper">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar-fill"></div>
+        </div>
+        <div class="progress-text" id="progress-percent">0%</div>
+    </div>
+
+    <div class="quote-section">
+        <p class="quote-text" id="quote-text">...</p>
+        <span class="quote-author" id="quote-author"></span>
+    </div>
+
+    <div id="backup-panel" class="backup-hidden">
+        <h3>⚙️ Backup de Dados</h3>
+        <p>Copie o código para salvar ou cole para restaurar.</p>
+        <textarea id="backup-data" placeholder="Cole seu código JSON aqui..."></textarea>
+        <div class="backup-btns">
+            <button onclick="generateBackup()">Gerar</button>
+            <button onclick="restoreBackup()">Restaurar</button>
+        </div>
+        <button class="close-btn" onclick="toggleBackupPanel()">Fechar</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
