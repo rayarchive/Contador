@@ -54,15 +54,44 @@ body {
     display: flex; 
     flex-wrap: wrap;
     gap: 40px; 
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     min-width: 280px;
 }
-.stat-group { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
-.stat-value { font-family: var(--font-chic); font-size: 2em; font-weight: 700; color: var(--text-primary); line-height: 1; }
-.stat-label { font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; }
+.stat-group { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    min-width: 80px;
+    justify-content: flex-start;
+}
+.stat-value { 
+    font-family: var(--font-chic); 
+    font-size: 2em; 
+    font-weight: 700; 
+    color: var(--text-primary); 
+    line-height: 1;
+}
+.stat-label { 
+    font-size: 0.85em; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    color: var(--text-secondary); 
+    margin-bottom: 6px; 
+    font-weight: 600;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-.action-buttons { display: flex; gap: 12px; margin-top: 5px; }
+.action-buttons { 
+    display: flex; 
+    gap: 12px; 
+    margin-top: 5px;
+    height: 25px;
+    align-items: center;
+}
 
 .icon-button { 
     background: none; 
@@ -138,9 +167,17 @@ body {
 .quote-author { display: block; font-size: 0.75em; color: var(--border-color); margin-top: 8px; text-transform: uppercase; }
 
 .config-toggle {
-    position: absolute; bottom: 18px; left: 10px; background: none;
-    border: none; cursor: pointer; opacity: 0.1; font-size: 10px;
-    z-index: 100; filter: grayscale(100%); transition: opacity 0.1s;
+    position: absolute; 
+    bottom: 15px; 
+    left: 10px; 
+    background: none;
+    border: none; 
+    cursor: pointer; 
+    opacity: 0.1; 
+    font-size: 10px;
+    z-index: 100; 
+    filter: grayscale(100%); 
+    transition: opacity 0.1s;
 }
 .config-toggle:hover { opacity: 0.6; }
 
@@ -229,18 +266,55 @@ body {
 @media (max-width: 500px) {
     .chic-container {
         padding: 20px 15px;
+        flex-direction: row;
+        justify-content: center;
+        min-height: auto;
     }
     
     .stats-container {
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: row;
+        gap: 25px;
+        width: 100%;
+        justify-content: space-around;
     }
     
     .stat-group {
-        width: 100%;
+        min-width: auto;
+        flex: 1;
     }
     
+    .stat-value {
+        font-size: 1.8em;
+    }
+    
+    .stat-label {
+        font-size: 0.75em;
+    }
+    
+    .action-buttons {
+        gap: 8px;
+    }
+    
+    .icon-button {
+        font-size: 0.95em;
+    }
+    
+    /* Ocultar progress bar e quote section no celular */
     .progress-wrapper {
-        height: 26px;
+        display: none;
+    }
+    
+    .quote-section {
+        display: none;
+    }
+    
+    /* Manter engrenagem visível */
+    .config-toggle {
+        display: block;
+    }
+    
+    /* Ajustar estrelas decorativas */
+    .corner-star {
+        width: 16px;
     }
 }
